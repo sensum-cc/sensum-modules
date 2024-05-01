@@ -1,4 +1,4 @@
-// This is test modulee for gui testing
+// This is test modulee for hook testing
 
 /*Module Config
 name|My Module
