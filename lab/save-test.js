@@ -15,6 +15,9 @@ Module Config*/
 const gui = getGui();
 const bot = getBot();
 
+let text = "Hello World!";
+let boolean = false;
+
 // This gets called when the module gets enabled
 // ConfigSave is the json data saved in onSave function you can load the config settings from it.
 function onLoad(configSave)
@@ -22,6 +25,8 @@ function onLoad(configSave)
     if (configSave)
     {
         const config = JSON.parse(configSave);
+        text = config.text;
+        boolean = config.boolean;
     }
 }
 
@@ -35,7 +40,7 @@ function onUnload()
 function onSave()
 {
     // return json with data to save
-    const config = {};
+    const config = {text, boolean};
     return JSON.stringify(config);
 }
 
@@ -44,5 +49,11 @@ function onSave()
 // This function is optional and can be removed if not needed.
 function onRender()
 {
-
+    gui.text("Text");
+    text = gui.textInput("text_input", "Text", text, 120, 180);
+    gui.text("Boolean");
+    if (gui.checkbox("Boolean", boolean))
+    {
+        boolean = !boolean;
+    }
 }
