@@ -32,7 +32,7 @@ function onSave()
 // This gets called in the modal render loop! only put gui related code here. dont put thread blocking code or operations here as it will pause the whole gui.
 // Use newThread for operations that take time.
 // This function is optional and can be removed if not needed.
-function onRender(configSave)
+function onRender()
 {
 }
 
