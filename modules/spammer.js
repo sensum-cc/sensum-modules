@@ -4,21 +4,23 @@
 // https://docs.sensum.cc
 
 /*Module Config
-name|My Module
-description|Module description
+name|Spammer
+description|Official Sensum Spammer module
 version|1.0.0
-title|My Module
-category|Autofarm
+title|Auto Spammer
+category|Spammer
 Module Config*/
 
 // Don't delete or edit these two lines, or call getGui/getBot anymore in your code.
 const gui = getGui();
 const bot = getBot();
 
-let enabled = false;
 let autoReconnect = false;
 let autoExit = false;
 let spamTextInput = "";
+let spamTextInput2 = "";
+let spamTextInput3 = "";
+let spamTextInput4  = "";
 let worldNameInput = "";
 let intervalInput = "6200";
 let positionInput = "0,0";
@@ -27,18 +29,11 @@ let paused = false;
 let adminInWorld = false;
 let checking = false;
 
-// This gets called when the module gets disabled
-function onDisable()
-{
-    enabled = false;
-    bot.playerJoinedCallback = null;
-}
-
 // This gets called when module gets saved
 function onSave()
 {
     // return json with data to save
-    const config = {autoReconnect, autoExit, spamTextInput, worldNameInput, intervalInput, positionInput};
+    const config = {autoReconnect, autoExit, spamTextInput, spamTextInput2, spamTextInput3, spamTextInput4, worldNameInput, intervalInput, positionInput};
     return JSON.stringify(config);
 }
 
@@ -55,8 +50,14 @@ function onRender()
     {
         autoExit = !autoExit;
     }
-    gui.text("Spam Text");
-    spamTextInput = gui.textInput("spam_text_input", "text to spam", spamTextInput, 120, 200);
+    gui.text("Spam Text 1");
+    spamTextInput = gui.textInput("spam_text_input_1", "spam slot 1", spamTextInput, 120, 200);
+    gui.text("Spam Text 2");
+    spamTextInput2 = gui.textInput("spam_text_input_2", "spam slot 2", spamTextInput2, 120, 200);
+    gui.text("Spam Text 3");
+    spamTextInput3 = gui.textInput("spam_text_input_3", "spam slot 3", spamTextInput3, 120, 200);
+    gui.text("Spam Text 4");
+    spamTextInput4 = gui.textInput("spam_text_input_4", "spam slot 4", spamTextInput4, 120, 200);
     gui.text("World Name");
     worldNameInput = gui.textInput("world_name_input", "name|doorid", worldNameInput, 120, 200);
     gui.text("Interval (ms)");
@@ -74,6 +75,9 @@ function loadConfig(configSave)
         autoReconnect = config.autoReconnect;
         autoExit = config.autoExit;
         spamTextInput = config.spamTextInput;
+        spamTextInput2 = config.spamTextInput2;
+        spamTextInput3 = config.spamTextInput3;
+        spamTextInput4 = config.spamTextInput4;
         worldNameInput = config.worldNameInput;
         intervalInput = config.intervalInput;
         positionInput = config.positionInput;
@@ -85,7 +89,6 @@ function loadConfig(configSave)
 function main(configSave)
 {
     loadConfig(configSave);
-    enabled = true;
     
     bot.playerJoinedCallback = onPlayerJoined;
 
@@ -117,7 +120,9 @@ function main(configSave)
 
     const interval = Number(intervalInput);
     const divided = interval / 2;
-    while (enabled)
+    //todo improve code quality once list gui components are added to sdk
+    let ix = 0;
+    while (isEnabled())
     {
         if (paused)
         {
@@ -129,11 +134,18 @@ function main(configSave)
             errorOccured("Bot disconnected");
             return;
         }
+        if (ix === 0 && spamTextInput === "") { ix++; if (ix > 3) ix = 0; continue; }
+        if (ix === 1 && spamTextInput2 === "")  { ix++; if (ix > 3) ix = 0; continue; }
+        if (ix === 2 && spamTextInput3 === "")  { ix++; if (ix > 3) ix = 0; continue; }
+        if (ix === 3 && spamTextInput4 === "")  { ix++; if (ix > 3) ix = 0; continue; }
         bot.setIcon(iconState.none);
-        bot.say(spamTextInput);
+        const text = ix === 0 ? spamTextInput : ix === 1 ? spamTextInput2 : ix === 2 ? spamTextInput3 : spamTextInput4;
+        bot.say(text);
         sleep(divided);
         bot.setIcon(iconState.chat);
-        sleep(divided)
+        sleep(divided);
+        ix++;
+        if (ix > 3) ix = 0;
     }
 }
 
@@ -142,7 +154,7 @@ function main(configSave)
 
 function onPlayerJoined(netAvatar)
 {
-    if (enabled === false) return;
+    if (isEnabled() === false) return;
     if (autoExit === false) return;
     if (netAvatar.isOwner === false && netAvatar.isAdmin === false) return;
     onAdminJoined();

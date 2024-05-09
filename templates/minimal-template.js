@@ -15,12 +15,6 @@ Module Config*/
 const gui = getGui();
 const bot = getBot();
 
-// This gets called when the module gets disabled
-function onDisable()
-{
-
-}
-
 // This gets called when module gets saved
 function onSave()
 {
