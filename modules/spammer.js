@@ -6,7 +6,7 @@
 /*Module Config
 name|Spammer
 description|Official Sensum Spammer module
-version|1.0.0
+version|1.0.1
 title|Auto Spammer
 category|Spammer
 Module Config*/
@@ -246,5 +246,5 @@ function connectSync()
 function errorOccured(text)
 {
     print("Error occured: {0}", text);
-    onDisable();
+    disable();
 }
