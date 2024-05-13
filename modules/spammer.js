@@ -42,28 +42,33 @@ function onSave()
 // This function is optional and can be removed if not needed.
 function onRender()
 {
-    if (gui.checkbox("Auto Reconnect", autoReconnect))
-    {
-        autoReconnect = !autoReconnect;
-    }
-    if (gui.checkbox("Auto Exit", autoExit))
-    {
-        autoExit = !autoExit;
-    }
-    gui.text("Spam Text 1");
-    spamTextInput = gui.textInput("spam_text_input_1", "spam slot 1", spamTextInput, 120, 200);
-    gui.text("Spam Text 2");
-    spamTextInput2 = gui.textInput("spam_text_input_2", "spam slot 2", spamTextInput2, 120, 200);
-    gui.text("Spam Text 3");
-    spamTextInput3 = gui.textInput("spam_text_input_3", "spam slot 3", spamTextInput3, 120, 200);
-    gui.text("Spam Text 4");
-    spamTextInput4 = gui.textInput("spam_text_input_4", "spam slot 4", spamTextInput4, 120, 200);
-    gui.text("World Name");
-    worldNameInput = gui.textInput("world_name_input", "name|doorid", worldNameInput, 120, 200);
-    gui.text("Interval (ms)");
-    intervalInput = gui.textInput("interval_input", "interval in milliseconds", intervalInput, 20, 200);
-    gui.text("Position (x,y) Tile Pos");
-    positionInput = gui.textInput("position_input", "x,y", positionInput, 20, 200);
+    gui.child('sc1', new vector2(220, 230), () => {
+        if (gui.checkbox("Auto Reconnect", autoReconnect))
+            {
+                autoReconnect = !autoReconnect;
+            }
+            if (gui.checkbox("Auto Exit", autoExit))
+            {
+                autoExit = !autoExit;
+            }
+            gui.text("World Name");
+            worldNameInput = gui.textInput("world_name_input", "name|doorid", worldNameInput, 120, 200);
+            gui.text("Interval (ms)");
+            intervalInput = gui.textInput("interval_input", "interval in milliseconds", intervalInput, 20, 200);
+            gui.text("Position (x,y) Tile Pos");
+            positionInput = gui.textInput("position_input", "x,y", positionInput, 20, 200);
+    });
+    gui.sameLine();
+    gui.child('sc2', new vector2(220, 230), () => {
+        gui.text("Spam Text 1");
+        spamTextInput = gui.textInput("spam_text_input_1", "spam slot 1", spamTextInput, 120, 200);
+        gui.text("Spam Text 2");
+        spamTextInput2 = gui.textInput("spam_text_input_2", "spam slot 2", spamTextInput2, 120, 200);
+        gui.text("Spam Text 3");
+        spamTextInput3 = gui.textInput("spam_text_input_3", "spam slot 3", spamTextInput3, 120, 200);
+        gui.text("Spam Text 4");
+        spamTextInput4 = gui.textInput("spam_text_input_4", "spam slot 4", spamTextInput4, 120, 200);
+    });
 }
 
 // Loads config
