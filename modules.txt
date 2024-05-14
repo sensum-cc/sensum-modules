@@ -1,1 +1,2 @@
+autofarm.js
 spammer.js
