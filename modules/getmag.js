@@ -4,11 +4,11 @@
 // https://docs.sensum.cc
 
 /*Module Config
-name|My Module
-description|Module description
+name|Open Magplant Dialog
+description|Temp fix for magplant
 version|1.0.0
-title|My Module
-category|Autofarm
+title|Open Magplant Dialog
+category|Other
 Module Config*/
 
 // Don't delete or edit these two lines, or call getGui/getBot anymore in your code.
@@ -38,4 +38,7 @@ function loadConfig(configSave) {
 // ConfigSave is the json data saved in onSave function you can load the config settings from it.
 function main(configSave) {
   loadConfig(configSave)
+  let pos = bot.netAvatar.tilePos
+  pos.y += 1
+  bot.place(pos, 32, false)
 }
