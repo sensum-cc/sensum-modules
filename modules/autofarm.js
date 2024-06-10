@@ -151,7 +151,10 @@ function main(configSave) {
       sleep(1000)
       continue
     }
-    bot.collectFromRange(18)
+    if (bot.playerItems.getItemCount(Number(itemIdTextInput)) == 0 && magplantMode == false)
+    {
+       bot.collectFromRange(18)
+    }
     doAutofarm()
   }
 }
@@ -223,6 +226,11 @@ function doAutofarm() {
    
     sleep(160)
   }
+
+    if (bot.playerItems.getItemCount(Number(itemIdTextInput)) == 0 && magplantMode == false)
+    {
+       bot.collectFromRange(18)
+    }
 }
 
 function getTileId(pos) {
