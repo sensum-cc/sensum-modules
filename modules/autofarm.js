@@ -6,7 +6,7 @@
 /*Module Config
 name|Autofarm
 description|Official sensum autofarm module
-version|1.0.1
+version|1.0.2
 title|Autofarm
 category|Autofarm
 Module Config*/
