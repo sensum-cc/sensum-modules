@@ -1,3 +1,0 @@
-autofarm.js
-spammer.js
-getmag.js
