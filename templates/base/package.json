@@ -1,6 +1,7 @@
 {
-    "Name": "base-template",
+    "Name": "",
     "Version": "1.0.0",
-    "Description": "Base template description",
+    "Description": "",
+    "Tags": "",
     "Dependencies": {}
 }
