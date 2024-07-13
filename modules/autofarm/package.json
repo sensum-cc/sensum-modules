@@ -1,0 +1,8 @@
+{
+    "Name": "Autofarm",
+    "Author": "Sensum",
+    "Version": "1.0.0",
+    "Description": "Official PNB Autofarm module",
+    "Tags": "autofarm,pnb,p&b",
+    "Dependencies": {}
+}
