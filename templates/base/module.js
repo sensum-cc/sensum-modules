@@ -1,3 +1,7 @@
+// Only call these once in whole module!
+const bot = getBot();
+const gui = getGui();
+
 // [REQUIRED] This gets called when the module config is saved
 function onSave() {
     // return json with data to be saved
