@@ -1,0 +1,8 @@
+{
+  "Name": "spammer",
+  "Author": "Sensum",
+  "Version": "1.0.0",
+  "Description": "Official sensum spammer module",
+  "Tags": "automation,spammer,sensum",
+  "Dependencies": {}
+}

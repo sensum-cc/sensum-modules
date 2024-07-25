@@ -17,6 +17,8 @@ let savedPos = new vector2Int(0, 0)
 let paused = false
 let reconnectTries = 0;
 
+let toggleTest = false;
+
 // [REQUIRED] This gets called when the module config is saved
 function onSave() {
     // return json with data to be saved
@@ -193,7 +195,7 @@ function onDisconnect() {
             }
 
             if (bot.world.name == null || bot.world.name.toLowerCase() === "exit" || bot.world.name.toLowerCase() !== savedWorld.toLowerCase()) {
-                if (bot.joinWorldSync() == false) {
+                if (bot.joinWorldSync(savedWorld) == false) {
                     errorOccurred('Failed to join world');
                     break;
                 }
@@ -223,6 +225,7 @@ function onDisconnect() {
 
 function getTileId(pos) {
     const tile = bot.world.worldTileMap.getTileByPos(pos)
+    if (tile == null) return -1;
     const itemInfo = getItemInfo(tile.foreground)
     return itemInfo.itemType === itemType.background ? tile.background : tile.foreground
  }
