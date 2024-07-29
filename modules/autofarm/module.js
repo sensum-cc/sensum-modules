@@ -96,7 +96,7 @@ function loadConfig(configJsonStr) {
 // [REQUIRED] This gets called when the module is enabled
 function main(configJsonStr) {
     loadConfig(configJsonStr)
-    bot.disconnectedCallback = onDisconnect;
+    hookCallback('onDisconnect', 'onDisconnect')
 
     if (bot.state != clientState.connected) {
         if (bot.connectSync() == false)
@@ -117,7 +117,8 @@ function main(configJsonStr) {
     reconnectTries = 0;
 
     while (isEnabled()) {
-        if (paused) {
+        const isPaused = getValueFromMainEngine("paused")
+        if (isPaused) {
             sleep(1000)
             continue
         }
@@ -186,7 +187,7 @@ function onDisconnect() {
     console.log('Disconnected from server');
     if (autoReconnect) {
         while (true) {
-            paused = true;
+            setValueToMainEngine("paused", true)
             console.log('Trying to reconnect in 5 seconds');
             sleep(5000);
             if (bot.connectSync() == false) {
@@ -208,7 +209,7 @@ function onDisconnect() {
                     break;
                 }
                 sleep(1000);
-                paused = false;
+                setValueToMainEngine("paused", false)
                 break;
             }
             else
