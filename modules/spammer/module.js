@@ -20,6 +20,7 @@ let newSpamTextInput = "";
 let selectedSpamTexts = [];
 let paused = false;
 let reconnectRetries = 0;
+let spamDetected = false;
 
 
 // [REQUIRED] This gets called when the module config is saved
@@ -141,6 +142,7 @@ function loadConfig(configJsonStr) {
 function main(configJsonStr) {
     loadConfig(configJsonStr)
     
+    hookCallback('onVariantFunction', 'onVariantFunction')
     hookCallback('onPlayerJoined', 'onPlayerJoined')
     hookCallback('onDisconnect', 'onDisconnect')
 
@@ -209,12 +211,14 @@ function main(configJsonStr) {
     const dividedInterval = spamInterval / 2
 
     while (isEnabled()) {
+        const isSpamDetected = getValueFromMainEngine("spamDetected")
         const isPaused = getValueFromMainEngine("paused")
-        if (isPaused) {
+        if (isPaused || isSpamDetected) {
             sleep(1000)
             continue
         }
         spamTexts.forEach(text => {
+            if (isSpamDetected || isPaused) return
             if (randomEmote) {
                 bot.say(emotes[Math.floor(Math.random() * emotes.length)])
             }
@@ -223,7 +227,22 @@ function main(configJsonStr) {
             bot.say(text)
             bot.setIcon(iconState.none)
             sleep(dividedInterval)
+            if (isEnabled() == false) return
         })
+    }
+}
+
+function onVariantFunction(variant) {
+    const mainPause = getValueFromMainEngine("spamDetected")
+    if (mainPause) return
+    if (variant.function == variantFunction.onConsoleMessage) {
+        const text = variant.getString(0)
+        if (text.includes(">>") && text.includes("Spam detected!")) {
+            setValueToMainEngine("spamDetected", true)
+            console.log("Spam detected, pausing")
+            sleep(9000)
+            setValueToMainEngine("spamDetected", false)
+        }
     }
 }
 
